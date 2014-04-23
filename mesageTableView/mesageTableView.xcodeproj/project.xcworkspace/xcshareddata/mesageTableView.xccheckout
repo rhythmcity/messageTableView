@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>80D8BB9D-1024-41D6-B8EA-DFDA26413ADB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>mesageTableView</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>BE9665DF-900C-448D-B77B-4C51AEE04FDD</key>
+		<string>https://github.com/rhythmcity/messageTableView.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>mesageTableView/mesageTableView.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>BE9665DF-900C-448D-B77B-4C51AEE04FDD</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/rhythmcity/messageTableView.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>BE9665DF-900C-448D-B77B-4C51AEE04FDD</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BE9665DF-900C-448D-B77B-4C51AEE04FDD</string>
+			<key>IDESourceControlWCCName</key>
+			<string>messageTableView</string>
+		</dict>
+	</array>
+</dict>
+</plist>

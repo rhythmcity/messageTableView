@@ -21,7 +21,7 @@
 
     // Configure the view for the selected state
 }
--(void)setcontextText:(NSString *)context andType:(NSString *)type andto:(int)to{
+-(void)setcontextText:(NSString *)context andphoto:(UIImage *)photo andType:(NSString *)type andto:(int)to{
    
     switch ([type intValue]) {
         case 1:
@@ -73,7 +73,7 @@
             
             }
         
-            self.img_content.image=[UIImage imageNamed:@"man.jpg"];
+            self.img_content.image=photo;
             [self addSubview:self.img_content];
         }
     

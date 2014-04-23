@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="_textField" destination="Y9Y-pK-UKR" id="VO1-KD-y9j"/>
                 <outlet property="tableView" destination="Ryn-60-FvN" id="epL-O4-Aw1"/>
+                <outlet property="toolView" destination="8Y5-XH-o2j" id="m3w-Ad-ePH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -58,6 +59,9 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <state key="highlighted" backgroundImage="chat_bottom_up_press.png"/>
+                            <connections>
+                                <action selector="addphoto_click:" destination="-1" eventType="touchUpInside" id="2fP-m1-Js2"/>
+                            </connections>
                         </button>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入......" minimumFontSize="17" background="chat_bottom_textfield.png" translatesAutoresizingMaskIntoConstraints="NO" id="Y9Y-pK-UKR">
                             <rect key="frame" x="56" y="7" width="146" height="30"/>

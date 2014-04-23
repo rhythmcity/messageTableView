@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface chatViewController : UIViewController<UITextFieldDelegate>
+@interface chatViewController : UIViewController<UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
 
     NSMutableArray *contentarr;
@@ -16,5 +16,8 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UITextField *_textField;
 
+@property (strong, nonatomic) IBOutlet UIView *toolView;
+
+- (IBAction)addphoto_click:(id)sender;
 
 @end
