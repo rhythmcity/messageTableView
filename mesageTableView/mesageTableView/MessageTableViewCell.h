@@ -14,5 +14,5 @@
 //@property (strong, nonatomic) UIImageView *img_content;
 @property (weak, nonatomic) IBOutlet UIImageView *img_content;
 
--(void)setcontextText:(NSString *)context andphoto:(UIImage *)photo andType:(NSString *)type andto:(int)to;
+-(void)setcontextText:(NSString *)context andphoto:(UIImage *)photo andType:(int )type andto:(int)to;
 @end

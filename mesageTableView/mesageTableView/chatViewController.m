@@ -8,6 +8,7 @@
 
 #import "chatViewController.h"
 #import "MessageTableViewCell.h"
+#import "Message.h"
 @interface chatViewController ()
 
 @end
@@ -45,15 +46,16 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([[contentarr objectAtIndex:indexPath.row] objectForKey:@"text"]) {
+     Message *n=[contentarr objectAtIndex:indexPath.row];
+    if (n.messagetype==text) {
         UIFont *font = [UIFont systemFontOfSize:16];
-        CGSize size=[[[contentarr objectAtIndex:indexPath.row] objectForKey:@"text"] sizeWithFont:font constrainedToSize:CGSizeMake(200, 1000) lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize size=[n.content sizeWithFont:font constrainedToSize:CGSizeMake(200, 1000) lineBreakMode:NSLineBreakByWordWrapping];
         return size.height+40;
     }
-    if ([[contentarr objectAtIndex:indexPath.row] objectForKey:@"pic"]) {
+    if (n.messagetype==pic) {
         return 170;
     }
-    if ([[contentarr objectAtIndex:indexPath.row] objectForKey:@"sound"]) {
+    if (n.messagetype==sound) {
         return 60;
     }
 
@@ -70,7 +72,9 @@
     NSDate *date = [NSDate date];
     fmt.dateFormat = @"MM-dd"; // @"yyyy-MM-dd HH:mm:ss"
     NSString *time = [fmt stringFromDate:date];
-    [contentarr addObject:[NSDictionary dictionaryWithObject:textField.text forKey:@"text"]];
+    Message *n=[Message messageWithicon:nil andtime:time andcontent:textField.text andimage:nil andsoundData:nil andtoType:MessageTypeMe andmessgeType:text];
+    NSLog(@"%@",n );
+    [contentarr addObject:n];
     // 2、刷新表格
     [self.tableView reloadData];
    [self scrolltocurrentSection];
@@ -99,16 +103,32 @@
             }
         }
     }
-    if ([[contentarr objectAtIndex:indexPath.row] objectForKey:@"pic"]) {
-        [cell setcontextText:nil andphoto:[[contentarr objectAtIndex:indexPath.row] objectForKey:@"pic"] andType:@"2" andto:indexPath.row%2];
-    }
-    if ([[contentarr objectAtIndex:indexPath.row] objectForKey:@"sound"]) {
-        [cell setcontextText:nil andphoto:nil andType:@"3" andto:indexPath.row%2];
-    }
-    if ([[contentarr objectAtIndex:indexPath.row] objectForKey:@"text"]) {
-        [cell setcontextText:[[contentarr objectAtIndex:indexPath.row] objectForKey:@"text"]  andphoto:nil andType:@"1" andto:indexPath.row%2];
+    Message *n=[contentarr objectAtIndex:indexPath.row];
+    
+    switch (n.messagetype) {
+        case text:
+            [cell setcontextText:n.content  andphoto:nil andType:n.messagetype andto:n.totype];
 
+            break;
+            case pic:
+               [cell setcontextText:nil andphoto:n.image andType:n.messagetype andto:n.totype];
+            break;
+            case sound:
+            [cell setcontextText:nil andphoto:nil andType:n.messagetype andto:n.totype];
+            break;
+            
+        default:
+            break;
     }
+//    if ([[contentarr objectAtIndex:indexPath.row] objectForKey:@"pic"]) {
+//          }
+//    if ([[contentarr objectAtIndex:indexPath.row] objectForKey:@"sound"]) {
+//        
+//    }
+//    if ([[contentarr objectAtIndex:indexPath.row] objectForKey:@"text"]) {
+//     
+//
+//    }
 
    
    
@@ -195,8 +215,10 @@
 {
     [self dismissViewControllerAnimated:YES completion:Nil];
     UIImage * photo = [info objectForKey:UIImagePickerControllerEditedImage];
-    
-    [contentarr addObject:[NSDictionary dictionaryWithObject:photo forKey:@"pic"]];
+    Message *n=[Message messageWithicon:nil andtime:nil andcontent:nil andimage:photo andsoundData:nil andtoType:MessageTypeMe andmessgeType:pic];
+  //  [contentarr addObject:n];
+
+    [contentarr addObject:n];
     [self.tableView reloadData];
     [self scrolltocurrentSection];
 

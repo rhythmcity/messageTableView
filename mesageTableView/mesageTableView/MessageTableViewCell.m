@@ -7,7 +7,8 @@
 //
 
 #import "MessageTableViewCell.h"
-
+#import "MJPhotoBrowser.h"
+#import "MJPhoto.h"
 @implementation MessageTableViewCell
 
 - (void)awakeFromNib
@@ -21,9 +22,9 @@
 
     // Configure the view for the selected state
 }
--(void)setcontextText:(NSString *)context andphoto:(UIImage *)photo andType:(NSString *)type andto:(int)to{
+-(void)setcontextText:(NSString *)context andphoto:(UIImage *)photo andType:(int )type andto:(int)to{
    
-    switch ([type intValue]) {
+    switch (type ) {
         case 1:
         {
             [self.img_content removeFromSuperview];
@@ -74,6 +75,9 @@
             }
         
             self.img_content.image=photo;
+            UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showbigPhoto:)];
+            self.img_content.tag=1;
+            [self.img_content addGestureRecognizer:tap];
             [self addSubview:self.img_content];
         }
     
@@ -91,6 +95,7 @@
                 normal = [UIImage imageNamed:@"chatto_bg_normal.png"];
                 normal = [normal stretchableImageWithLeftCapWidth:normal.size.width * 0.5 topCapHeight:normal.size.height * 0.7];
                 self.headimg.frame=CGRectMake(320-60, 10, 40, 40);
+                
             }
             [self._contentBtn setBackgroundImage:normal forState:UIControlStateNormal];
             [self  addSubview:self._contentBtn];
@@ -101,10 +106,38 @@
             break;
     }
 }
+
+-(void)showbigPhoto:(UITapGestureRecognizer *)tap{
+    
+    
+    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:1];
+    for (int i = 0; i<1; i++) {
+        // 替换为中等尺寸图片
+//        NSString *url=[NSString stringWithFormat:@"%@%@",image_base_url,[self.photoarray objectAtIndex:i]];
+        MJPhoto *photo = [[MJPhoto alloc] init];
+        
+        UIImageView *imageview= (UIImageView*)tap.view;
+        photo.image=imageview.image;
+            photo.srcImageView = imageview; // 来源于哪个UIImageView
+            [photos addObject:photo];
+        
+    }
+    NSLog(@"%@",photos);
+    
+    // 2.显示相册
+    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+    browser.currentPhotoIndex = tap.view.tag-1; // 弹出相册时显示的第一张图片是？
+    browser.photos = photos; // 设置所有的图片
+    [browser show];
+
+
+
+
+}
 - (void)dealloc
 {
     self.img_content=nil;
 
-    NSLog(@"delloc");
+ //   NSLog(@"delloc");
 }
 @end
