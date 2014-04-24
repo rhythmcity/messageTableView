@@ -12,6 +12,8 @@
 {
 
     NSMutableArray *contentarr;
+    float tableViewHeight;
+    float toolViewX;
 }
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UITextField *_textField;

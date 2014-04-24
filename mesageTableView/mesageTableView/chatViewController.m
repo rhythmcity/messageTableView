@@ -9,6 +9,7 @@
 #import "chatViewController.h"
 #import "MessageTableViewCell.h"
 #import "Message.h"
+#import "AppDelegate.h"
 @interface chatViewController ()
 
 @end
@@ -30,8 +31,6 @@
     // Do any additional setup after loading the view from its nib.
    
     contentarr=[[NSMutableArray alloc] init];
-//    contentarr=[[NSMutableArray alloc] initWithObjects:[NSDictionary dictionaryWithObject:@"1111111111" forKey:@"text"],[NSDictionary dictionaryWithObject:image forKey:@"pic"],[NSDictionary dictionaryWithObject:@"111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" forKey:@"text"],[NSDictionary dictionaryWithObject:image forKey:@"pic"],[NSDictionary dictionaryWithObject:@"11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"forKey:@"text"],[NSDictionary dictionaryWithObject:image forKey:@"pic"],[NSDictionary dictionaryWithObject:@"1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" forKey:@"text"],[NSDictionary dictionaryWithObject:image forKey:@"pic"],[NSDictionary dictionaryWithObject:@"1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" forKey:@"text"],[NSDictionary dictionaryWithObject:image forKey:@"pic"],[NSDictionary dictionaryWithObject:@"1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" forKey:@"text"],[NSDictionary dictionaryWithObject:image forKey:@"pic"],[NSDictionary dictionaryWithObject:image forKey:@"pic"],[NSDictionary dictionaryWithObject:@"1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" forKey:@"text"],[NSDictionary dictionaryWithObject:image forKey:@"pic"],[NSDictionary dictionaryWithObject:@"1" forKey:@"sound"],[NSDictionary dictionaryWithObject:@"1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" forKey:@"text"],[NSDictionary dictionaryWithObject:image forKey:@"pic"],[NSDictionary dictionaryWithObject:@"1" forKey:@"sound"],[NSDictionary dictionaryWithObject:@"1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" forKey:@"text"],[NSDictionary dictionaryWithObject:image forKey:@"pic"],[NSDictionary dictionaryWithObject:@"1" forKey:@"sound"],[NSDictionary dictionaryWithObject:@"1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" forKey:@"text"],[NSDictionary dictionaryWithObject:@"1" forKey:@"sound"],[NSDictionary dictionaryWithObject:@"1" forKey:@"sound"],nil];
-   // NSLog(@"%@",contentarr);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -41,6 +40,9 @@
     __textField.leftViewMode = UITextFieldViewModeAlways;
     
     __textField.delegate = self;
+ 
+    tableViewHeight=[[UIScreen mainScreen] currentMode].size.height/2-self.toolView.frame.size.height;
+    NSLog(@"%f",tableViewHeight);
 
 
 }
@@ -65,9 +67,10 @@
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    
+    if (/*[textField.text hasPrefix:@" "]||*/textField.text==nil||[textField.text isEqualToString:@""]) {
+        return  NO;
+    }
     // 1、增加数据源
-    NSString *content = textField.text;
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     NSDate *date = [NSDate date];
     fmt.dateFormat = @"MM-dd"; // @"yyyy-MM-dd HH:mm:ss"
@@ -92,7 +95,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    MessageTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"message"];
+    MessageTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"messageTableViewIndetifier"];
     if (!cell) {
         
         NSArray *objects = [[NSBundle mainBundle] loadNibNamed:@"MessageTableViewCell" owner:self options:nil];
@@ -111,7 +114,7 @@
 
             break;
             case pic:
-               [cell setcontextText:nil andphoto:n.image andType:n.messagetype andto:n.totype];
+            [cell setcontextText:nil andphoto:n.image andType:n.messagetype andto:n.totype];
             break;
             case sound:
             [cell setcontextText:nil andphoto:nil andType:n.messagetype andto:n.totype];
@@ -120,34 +123,18 @@
         default:
             break;
     }
-//    if ([[contentarr objectAtIndex:indexPath.row] objectForKey:@"pic"]) {
-//          }
-//    if ([[contentarr objectAtIndex:indexPath.row] objectForKey:@"sound"]) {
-//        
-//    }
-//    if ([[contentarr objectAtIndex:indexPath.row] objectForKey:@"text"]) {
-//     
-//
-//    }
-
-   
-   
     return cell;
 
 
 }
 #pragma mark 键盘即将显示
 - (void)keyBoardWillShow:(NSNotification *)note{
-  
-
     CGRect rect = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat ty = - rect.size.height;
     [UIView animateWithDuration:[note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] animations:^{
-        self.tableView.frame=CGRectMake(0, 0, 320, 525+ty);
-        self.toolView.frame=CGRectMake(0, 525+ty, self.toolView.frame.size.width, self.toolView.frame.size.height);
+        self.tableView.frame=CGRectMake(0, 0, 320, tableViewHeight+ty);
+        self.toolView.frame=CGRectMake(0, tableViewHeight+ty, self.toolView.frame.size.width, self.toolView.frame.size.height);
         [self scrolltocurrentSection];
-         //  self.toolView.transform = CGAffineTransformMakeTranslation(0, ty);
-          //  self.view.transform = CGAffineTransformMakeTranslation(0, ty);
     }];
     
 }
@@ -156,12 +143,9 @@
 }
 #pragma mark 键盘即将退出
 - (void)keyBoardWillHide:(NSNotification *)note{
-    CGRect rect = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGFloat ty = - rect.size.height;
     [UIView animateWithDuration:[note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] animations:^{
-        self.tableView.frame=CGRectMake(0, 0, 320, 525);
-        self.toolView.frame=CGRectMake(0, 525, self.toolView.frame.size.width, self.toolView.frame.size.height);
-      //  self.toolView.transform = CGAffineTransformIdentity;
+        self.tableView.frame=CGRectMake(0, 0, 320, tableViewHeight);
+        self.toolView.frame=CGRectMake(0, tableViewHeight, self.toolView.frame.size.width, self.toolView.frame.size.height);
     }];
 }
 
@@ -187,25 +171,20 @@
     if ([buttonTitle isEqualToString:@"拍照"])
     {
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-//            isCamera=YES;
-            UIImagePickerController *imgPicker = [UIImagePickerController new];
+            UIImagePickerController *imgPicker = [[UIImagePickerController alloc] init];
             imgPicker.delegate = self;
             imgPicker.allowsEditing=YES;
             imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            //            [self presentModalViewController:imgPicker animated:YES];
             [self presentViewController:imgPicker animated:YES completion:Nil];
         }
         
     }
     else if([buttonTitle isEqualToString:@"图库"])
     {
-//        isCamera=NO;
-        UIImagePickerController *imgPicker = [UIImagePickerController new];
+        UIImagePickerController *imgPicker = [[UIImagePickerController alloc] init];
         imgPicker.delegate = self;
         imgPicker.allowsEditing=YES;
         imgPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        
-        //        [self presentModalViewController:imgPicker animated:YES];
         [self presentViewController:imgPicker animated:YES completion:Nil];
     }
 }
@@ -213,15 +192,13 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    [self dismissViewControllerAnimated:YES completion:Nil];
+
+   [picker dismissViewControllerAnimated:YES completion:Nil];
     UIImage * photo = [info objectForKey:UIImagePickerControllerEditedImage];
     Message *n=[Message messageWithicon:nil andtime:nil andcontent:nil andimage:photo andsoundData:nil andtoType:MessageTypeMe andmessgeType:pic];
-  //  [contentarr addObject:n];
-
     [contentarr addObject:n];
     [self.tableView reloadData];
     [self scrolltocurrentSection];
-
 }
 
 -(void)scrolltocurrentSection{
