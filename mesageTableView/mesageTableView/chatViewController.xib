@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="chatViewController">
             <connections>
+                <outlet property="_speakBtn" destination="sM8-kh-PMW" id="9gz-oH-Luk"/>
                 <outlet property="_textField" destination="Y9Y-pK-UKR" id="VO1-KD-y9j"/>
                 <outlet property="tableView" destination="Ryn-60-FvN" id="epL-O4-Aw1"/>
                 <outlet property="toolView" destination="8Y5-XH-o2j" id="m3w-Ad-ePH"/>
@@ -43,6 +44,9 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <state key="highlighted" backgroundImage="chat_bottom_voice_press.png"/>
+                            <connections>
+                                <action selector="voiceBtnClick:" destination="-1" eventType="touchUpInside" id="Zmk-Zx-za6"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2wo-ap-RKM">
                             <rect key="frame" x="222" y="7" width="34" height="34"/>
@@ -75,6 +79,10 @@
                             <state key="normal" title="按住说话" backgroundImage="chat_bottom_textfield.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="recordVoice:" destination="-1" eventType="touchDown" id="KkB-vI-Qve"/>
+                                <action selector="upStopRecordVoice:" destination="-1" eventType="touchUpInside" id="B4e-Nj-rsB"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

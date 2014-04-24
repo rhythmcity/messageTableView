@@ -17,7 +17,7 @@
 @synthesize soundData;
 @synthesize totype;
 @synthesize messagetype;
-+(id)messageWithicon:(NSString *)icon andtime:(NSString *)time andcontent:(NSString *)content andimage:(UIImage *)image andsoundData:(NSData *)sounddata andtoType:(toType)type andmessgeType:(MessageType)messagetype{
++(id)messageWithicon:(NSString *)icon andtime:(NSString *)time andcontent:(NSString *)content andimage:(UIImage *)image andsoundData:(NSString *)sounddata andtoType:(toType)type andmessgeType:(MessageType)messagetype{
 
     Message *n=[[Message alloc] init];
     n.icon=icon;

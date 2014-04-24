@@ -15,7 +15,7 @@
 @end
 
 @implementation chatViewController
-
+@synthesize recorderVC,originWav,convertAmr,convertWav;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -42,7 +42,13 @@
     __textField.delegate = self;
  
     tableViewHeight=[[UIScreen mainScreen] currentMode].size.height/2-self.toolView.frame.size.height;
-    NSLog(@"%f",tableViewHeight);
+ //   NSLog(@"%f",tableViewHeight);
+    
+    recorderVC = [[ChatVoiceRecorderVC alloc]init];
+    recorderVC.vrbDelegate = self;
+    
+  
+    
 
 
 }
@@ -76,7 +82,6 @@
     fmt.dateFormat = @"MM-dd"; // @"yyyy-MM-dd HH:mm:ss"
     NSString *time = [fmt stringFromDate:date];
     Message *n=[Message messageWithicon:nil andtime:time andcontent:textField.text andimage:nil andsoundData:nil andtoType:MessageTypeMe andmessgeType:text];
-    NSLog(@"%@",n );
     [contentarr addObject:n];
     // 2、刷新表格
     [self.tableView reloadData];
@@ -107,22 +112,8 @@
         }
     }
     Message *n=[contentarr objectAtIndex:indexPath.row];
-    
-    switch (n.messagetype) {
-        case text:
-            [cell setcontextText:n.content  andphoto:nil andType:n.messagetype andto:n.totype];
+    [cell setcontextText:n.content  andphoto:n.image andVoice:n.soundData andType:n.messagetype andto:n.totype];
 
-            break;
-            case pic:
-            [cell setcontextText:nil andphoto:n.image andType:n.messagetype andto:n.totype];
-            break;
-            case sound:
-            [cell setcontextText:nil andphoto:nil andType:n.messagetype andto:n.totype];
-            break;
-            
-        default:
-            break;
-    }
     return cell;
 
 
@@ -163,6 +154,8 @@
     [sheet showInView:[UIApplication sharedApplication].keyWindow];
 
 }
+
+
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -210,5 +203,69 @@
    
 
 }
+#pragma mark - 语音按钮点击
+- (IBAction)voiceBtnClick:(id)sender {
+    if (__textField.hidden) { //输入框隐藏，按住说话按钮显示
+        __textField.hidden = NO;
+        self._speakBtn.hidden = YES;
+        [sender setBackgroundImage:[UIImage imageNamed:@"chat_bottom_voice_nor.png"] forState:UIControlStateNormal];
+        [sender setBackgroundImage:[UIImage imageNamed:@"chat_bottom_voice_press.png"] forState:UIControlStateHighlighted];
+        [__textField becomeFirstResponder];
+    }else{ //输入框处于显示状态，按住说话按钮处于隐藏状态
+        __textField.hidden = YES;
+        self._speakBtn.hidden = NO;
+        [sender setBackgroundImage:[UIImage imageNamed:@"chat_bottom_keyboard_nor.png"] forState:UIControlStateNormal];
+        [sender setBackgroundImage:[UIImage imageNamed:@"chat_bottom_keyboard_press.png"] forState:UIControlStateHighlighted];
+        [__textField resignFirstResponder];
+    }
+}
+- (IBAction)recordVoice:(id)sender {
+    //设置文件名
+    self.originWav = [VoiceRecorderBaseVC getCurrentTimeString];
+    //开始录音
+    [recorderVC beginRecordByFileName:self.originWav];
+    [VoiceConverter changeStu];
+    //启动计时器
+    NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self                                                                           selector:@selector(wavToAmrBtnPressed) object:nil];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [queue addOperation:operation];
+}
 
+- (IBAction)upStopRecordVoice:(id)sender {
+    [VoiceConverter changeStu];
+    [recorderVC endRecord];
+}
+- (void)VoiceRecorderBaseVCRecordFinish:(NSString *)_filePath fileName:(NSString*)_fileName{
+    NSLog(@"录音完成，文件路径:%@",_filePath);
+    [self wavToAmrBtnPressed];
+}
+- (void)wavToAmrBtnPressed{
+    if (originWav.length > 0){
+        self.convertAmr = [originWav stringByAppendingString:@"wavToAmr"];
+        
+        //转格式
+        [VoiceConverter wavToAmr:[VoiceRecorderBaseVC getPathByFileName:originWav ofType:@"wav"] amrSavePath:[VoiceRecorderBaseVC getPathByFileName:convertAmr ofType:@"amr"]];
+        [self amrToWavBtnPressed];
+    }
+}
+-(void)reloadmessage{
+    [self.tableView reloadData];
+    [self scrolltocurrentSection];
+}
+
+- (void)amrToWavBtnPressed{
+    if (convertAmr.length > 0){
+        self.convertWav = [originWav stringByAppendingString:@"amrToWav"];
+       // NSLog(@"%@",convertWav);
+     //   NSLog(@"%@",recorderVC.recordFilePath);
+        Message *n=[Message messageWithicon:nil andtime:nil andcontent:nil andimage:nil andsoundData:recorderVC.recordFilePath andtoType:MessageTypeMe andmessgeType:sound];
+        [contentarr addObject:n];
+        [self performSelectorOnMainThread:@selector(reloadmessage) withObject:nil waitUntilDone:YES];
+       
+
+//        //转格式
+//        [VoiceConverter amrToWav:[VoiceRecorderBaseVC getPathByFileName:convertAmr ofType:@"amr"] wavSavePath:[VoiceRecorderBaseVC getPathByFileName:convertWav ofType:@"wav"]];
+//        
+    }
+}
 @end

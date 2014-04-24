@@ -22,12 +22,12 @@
 
     // Configure the view for the selected state
 }
--(void)setcontextText:(NSString *)context andphoto:(UIImage *)photo andType:(int )type andto:(int)to{
-   
+-(void)setcontextText:(NSString *)context andphoto:(UIImage *)photo andVoice:(NSString *)Voice andType:(int )type andto:(int)to{
+   [self.img_content removeFromSuperview];
+   [self._contentBtn removeFromSuperview];
     switch (type ) {
         case 1:
         {
-            [self.img_content removeFromSuperview];
             [self._contentBtn setTitle:context forState:UIControlStateNormal];
             self._contentBtn.titleLabel.numberOfLines = 0;
             self._contentBtn.contentEdgeInsets = UIEdgeInsetsMake(10 , 25, 15, 15);
@@ -36,7 +36,6 @@
             CGSize size=[context sizeWithFont:__contentBtn.titleLabel.font constrainedToSize:CGSizeMake(200, 1000) lineBreakMode:NSLineBreakByWordWrapping];
             UIImage *normal;
             if (to==0) {
-                
                 self.headimg.frame=CGRectMake(10, 10, 40, 40);
                 self._contentBtn.frame=CGRectMake(60, 10, size.width+15+25, size.height+15+15);
                 
@@ -61,7 +60,7 @@
         {
             //self.img_content=[[UIImageView alloc] init];
             self.img_content.contentMode=UIViewContentModeScaleAspectFit;
-            [self._contentBtn removeFromSuperview];
+         
             if (to==0) {
                 self.headimg.frame=CGRectMake(10, 10, 40, 40);
                 self.img_content.frame=CGRectMake(80, 10, 150, 150);
@@ -73,7 +72,6 @@
                 self.img_content.frame=CGRectMake(320-80-150, 10, 150, 150);
             
             }
-        
             self.img_content.image=photo;
             UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showbigPhoto:)];
             self.img_content.tag=1;
@@ -86,19 +84,22 @@
             UIImage *normal;
             if (to==0) {
                 self.headimg.frame=CGRectMake(10, 10, 40, 40);
-                self._contentBtn.frame=CGRectMake(60, 10, 100, 40);
+                self._contentBtn.frame=CGRectMake(60, 10, 150, 40);
                 normal = [UIImage imageNamed:@"chatfrom_bg_normal.png"];
                 normal = [normal stretchableImageWithLeftCapWidth:normal.size.width * 0.5 topCapHeight:normal.size.height * 0.7];
             }else{
                 self._contentBtn.contentEdgeInsets = UIEdgeInsetsMake(10 , 15, 15, 25);
-                self._contentBtn.frame=CGRectMake(320-60-100, 10, 100, 40);
+                self._contentBtn.frame=CGRectMake(320-60-150, 10, 150, 40);
                 normal = [UIImage imageNamed:@"chatto_bg_normal.png"];
                 normal = [normal stretchableImageWithLeftCapWidth:normal.size.width * 0.5 topCapHeight:normal.size.height * 0.7];
                 self.headimg.frame=CGRectMake(320-60, 10, 40, 40);
                 
             }
+            convertWav=Voice;
+            [self._contentBtn setTitle:@"这是一条语音" forState:UIControlStateNormal];
             [self._contentBtn setBackgroundImage:normal forState:UIControlStateNormal];
-            [self  addSubview:self._contentBtn];
+            [self._contentBtn addTarget:self action:@selector(playVoice:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:self._contentBtn];
         }
             break;
             
@@ -106,7 +107,21 @@
             break;
     }
 }
+#pragma mark - 播放转换后wav
+//- (void)playConvertWavBtnPressed:(id)sender {
+//  
+//}
+-(void)playVoice:(id)sender{
 
+    if (convertWav.length > 0){
+        //初始化播放器
+        _player = [[AVAudioPlayer alloc]init];
+        _player = [_player initWithContentsOfURL:[NSURL URLWithString:convertWav] error:nil];
+    
+        [_player play];
+    }
+
+}
 -(void)showbigPhoto:(UITapGestureRecognizer *)tap{
     
     
@@ -136,7 +151,7 @@
 }
 - (void)dealloc
 {
-    self.img_content=nil;
+   // self.img_content=nil;
 
  //   NSLog(@"delloc");
 }

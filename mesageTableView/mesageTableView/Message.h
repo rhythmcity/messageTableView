@@ -27,8 +27,8 @@ typedef enum {
 @property (nonatomic, strong) NSString *time;
 @property (nonatomic, strong) NSString *content;
 @property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong) NSData *soundData;
+@property (nonatomic, strong) NSString *soundData;
 @property (nonatomic, assign) toType totype;
 @property (nonatomic, assign) MessageType messagetype;
-+(id)messageWithicon:(NSString *)icon andtime:(NSString *)time andcontent:(NSString *)content andimage:(UIImage *)image andsoundData:(NSData *)sounddata andtoType:(toType)type andmessgeType:(MessageType)messagetype;
++(id)messageWithicon:(NSString *)icon andtime:(NSString *)time andcontent:(NSString *)content andimage:(UIImage *)image andsoundData:(NSString *)sounddata andtoType:(toType)type andmessgeType:(MessageType)messagetype;
 @end

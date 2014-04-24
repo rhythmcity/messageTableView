@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <AVFoundation/AVFoundation.h>
 @interface MessageTableViewCell : UITableViewCell
+{
+    NSString * convertWav;
+}
+@property (strong, nonatomic)   AVAudioPlayer           *player;
 @property (strong, nonatomic) IBOutlet UIButton *_contentBtn;
 @property (strong, nonatomic) IBOutlet UIImageView *headimg;
 //@property (strong, nonatomic) UIImageView *img_content;
-@property (weak, nonatomic) IBOutlet UIImageView *img_content;
+@property (strong, nonatomic) IBOutlet UIImageView *img_content;
 
--(void)setcontextText:(NSString *)context andphoto:(UIImage *)photo andType:(int )type andto:(int)to;
+-(void)setcontextText:(NSString *)context andphoto:(UIImage *)photo andVoice:(NSString *)Voice andType:(int )type andto:(int)to;
 @end

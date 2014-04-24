@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA0CF9281908CF630060D7F7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0CF9271908CF630060D7F7 /* AVFoundation.framework */; };
+		BA0CF9421908D0700060D7F7 /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = BA0CF92D1908D0700060D7F7 /* amrFileCodec.mm */; };
+		BA0CF9431908D0700060D7F7 /* wav.mm in Sources */ = {isa = PBXBuildFile; fileRef = BA0CF92F1908D0700060D7F7 /* wav.mm */; };
+		BA0CF9441908D0700060D7F7 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0CF9311908D0700060D7F7 /* libopencore-amrnb.a */; };
+		BA0CF9451908D0700060D7F7 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0CF9321908D0700060D7F7 /* libopencore-amrwb.a */; };
+		BA0CF9461908D0700060D7F7 /* VoiceConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = BA0CF93A1908D0700060D7F7 /* VoiceConverter.mm */; };
+		BA0CF9471908D0700060D7F7 /* ChatVoiceRecorderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0CF93F1908D0700060D7F7 /* ChatVoiceRecorderVC.m */; };
+		BA0CF9481908D0700060D7F7 /* VoiceRecorderBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BA0CF9411908D0700060D7F7 /* VoiceRecorderBaseVC.m */; };
 		BA8CDBB719066EBB00F10616 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA8CDBB619066EBB00F10616 /* Foundation.framework */; };
 		BA8CDBB919066EBB00F10616 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA8CDBB819066EBB00F10616 /* CoreGraphics.framework */; };
 		BA8CDBBB19066EBB00F10616 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA8CDBBA19066EBB00F10616 /* UIKit.framework */; };
@@ -82,6 +90,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA0CF9271908CF630060D7F7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		BA0CF92C1908D0700060D7F7 /* amrFileCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amrFileCodec.h; sourceTree = "<group>"; };
+		BA0CF92D1908D0700060D7F7 /* amrFileCodec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = amrFileCodec.mm; sourceTree = "<group>"; };
+		BA0CF92E1908D0700060D7F7 /* wav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav.h; sourceTree = "<group>"; };
+		BA0CF92F1908D0700060D7F7 /* wav.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = wav.mm; sourceTree = "<group>"; };
+		BA0CF9311908D0700060D7F7 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
+		BA0CF9321908D0700060D7F7 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
+		BA0CF9341908D0700060D7F7 /* interf_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_dec.h; sourceTree = "<group>"; };
+		BA0CF9351908D0700060D7F7 /* interf_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_enc.h; sourceTree = "<group>"; };
+		BA0CF9371908D0700060D7F7 /* dec_if.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dec_if.h; sourceTree = "<group>"; };
+		BA0CF9381908D0700060D7F7 /* if_rom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = if_rom.h; sourceTree = "<group>"; };
+		BA0CF9391908D0700060D7F7 /* VoiceConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceConverter.h; sourceTree = "<group>"; };
+		BA0CF93A1908D0700060D7F7 /* VoiceConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VoiceConverter.mm; sourceTree = "<group>"; };
+		BA0CF93E1908D0700060D7F7 /* ChatVoiceRecorderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatVoiceRecorderVC.h; sourceTree = "<group>"; };
+		BA0CF93F1908D0700060D7F7 /* ChatVoiceRecorderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatVoiceRecorderVC.m; sourceTree = "<group>"; };
+		BA0CF9401908D0700060D7F7 /* VoiceRecorderBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceRecorderBaseVC.h; sourceTree = "<group>"; };
+		BA0CF9411908D0700060D7F7 /* VoiceRecorderBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceRecorderBaseVC.m; sourceTree = "<group>"; };
 		BA8CDBB319066EBB00F10616 /* mesageTableView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mesageTableView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA8CDBB619066EBB00F10616 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BA8CDBB819066EBB00F10616 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -183,8 +208,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA0CF9281908CF630060D7F7 /* AVFoundation.framework in Frameworks */,
 				BA8CDBB919066EBB00F10616 /* CoreGraphics.framework in Frameworks */,
 				BA8CDBBB19066EBB00F10616 /* UIKit.framework in Frameworks */,
+				BA0CF9441908D0700060D7F7 /* libopencore-amrnb.a in Frameworks */,
+				BA0CF9451908D0700060D7F7 /* libopencore-amrwb.a in Frameworks */,
 				BA8CDBB719066EBB00F10616 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -202,6 +230,93 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA0CF9291908D04F0060D7F7 /* Voice */ = {
+			isa = PBXGroup;
+			children = (
+				BA0CF92A1908D0700060D7F7 /* VoiceConvert */,
+				BA0CF93B1908D0700060D7F7 /* VoiceRecorderVC */,
+			);
+			name = Voice;
+			sourceTree = "<group>";
+		};
+		BA0CF92A1908D0700060D7F7 /* VoiceConvert */ = {
+			isa = PBXGroup;
+			children = (
+				BA0CF92B1908D0700060D7F7 /* amrwapper */,
+				BA0CF9301908D0700060D7F7 /* lib */,
+				BA0CF9331908D0700060D7F7 /* opencore-amrnb */,
+				BA0CF9361908D0700060D7F7 /* opencore-amrwb */,
+				BA0CF9391908D0700060D7F7 /* VoiceConverter.h */,
+				BA0CF93A1908D0700060D7F7 /* VoiceConverter.mm */,
+			);
+			path = VoiceConvert;
+			sourceTree = "<group>";
+		};
+		BA0CF92B1908D0700060D7F7 /* amrwapper */ = {
+			isa = PBXGroup;
+			children = (
+				BA0CF92C1908D0700060D7F7 /* amrFileCodec.h */,
+				BA0CF92D1908D0700060D7F7 /* amrFileCodec.mm */,
+				BA0CF92E1908D0700060D7F7 /* wav.h */,
+				BA0CF92F1908D0700060D7F7 /* wav.mm */,
+			);
+			path = amrwapper;
+			sourceTree = "<group>";
+		};
+		BA0CF9301908D0700060D7F7 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				BA0CF9311908D0700060D7F7 /* libopencore-amrnb.a */,
+				BA0CF9321908D0700060D7F7 /* libopencore-amrwb.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		BA0CF9331908D0700060D7F7 /* opencore-amrnb */ = {
+			isa = PBXGroup;
+			children = (
+				BA0CF9341908D0700060D7F7 /* interf_dec.h */,
+				BA0CF9351908D0700060D7F7 /* interf_enc.h */,
+			);
+			path = "opencore-amrnb";
+			sourceTree = "<group>";
+		};
+		BA0CF9361908D0700060D7F7 /* opencore-amrwb */ = {
+			isa = PBXGroup;
+			children = (
+				BA0CF9371908D0700060D7F7 /* dec_if.h */,
+				BA0CF9381908D0700060D7F7 /* if_rom.h */,
+			);
+			path = "opencore-amrwb";
+			sourceTree = "<group>";
+		};
+		BA0CF93B1908D0700060D7F7 /* VoiceRecorderVC */ = {
+			isa = PBXGroup;
+			children = (
+				BA0CF93C1908D0700060D7F7 /* ChatVoiceRecorderVC */,
+				BA0CF9401908D0700060D7F7 /* VoiceRecorderBaseVC.h */,
+				BA0CF9411908D0700060D7F7 /* VoiceRecorderBaseVC.m */,
+			);
+			path = VoiceRecorderVC;
+			sourceTree = "<group>";
+		};
+		BA0CF93C1908D0700060D7F7 /* ChatVoiceRecorderVC */ = {
+			isa = PBXGroup;
+			children = (
+				BA0CF93D1908D0700060D7F7 /* ChatRecorderView */,
+				BA0CF93E1908D0700060D7F7 /* ChatVoiceRecorderVC.h */,
+				BA0CF93F1908D0700060D7F7 /* ChatVoiceRecorderVC.m */,
+			);
+			path = ChatVoiceRecorderVC;
+			sourceTree = "<group>";
+		};
+		BA0CF93D1908D0700060D7F7 /* ChatRecorderView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ChatRecorderView;
+			sourceTree = "<group>";
+		};
 		BA8CDBAA19066EBB00F10616 = {
 			isa = PBXGroup;
 			children = (
@@ -224,6 +339,7 @@
 		BA8CDBB519066EBB00F10616 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BA0CF9271908CF630060D7F7 /* AVFoundation.framework */,
 				BA8CDBB619066EBB00F10616 /* Foundation.framework */,
 				BA8CDBB819066EBB00F10616 /* CoreGraphics.framework */,
 				BA8CDBBA19066EBB00F10616 /* UIKit.framework */,
@@ -254,6 +370,7 @@
 		BA8CDBBD19066EBB00F10616 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BA0CF9291908D04F0060D7F7 /* Voice */,
 				BACF98B71907C43800A4EC95 /* MBProgressHUD */,
 				BACF98851907C41E00A4EC95 /* SDWebImage */,
 				BACF98701907C15F00A4EC95 /* MJPhotoBrowser */,
@@ -515,8 +632,10 @@
 				BACF98B11907C41F00A4EC95 /* UIButton+WebCache.m in Sources */,
 				BACF98AE1907C41F00A4EC95 /* SDWebImageManager+MJ.m in Sources */,
 				BACF986F1907B0DE00A4EC95 /* Message.m in Sources */,
+				BA0CF9461908D0700060D7F7 /* VoiceConverter.mm in Sources */,
 				BACF98821907C15F00A4EC95 /* MJPhotoProgressView.m in Sources */,
 				BACF98BF1907C43800A4EC95 /* MBProgressHUD.m in Sources */,
+				BA0CF9421908D0700060D7F7 /* amrFileCodec.mm in Sources */,
 				BACF98A71907C41F00A4EC95 /* MKAnnotationView+WebCache.m in Sources */,
 				BACF98AD1907C41F00A4EC95 /* SDWebImageDownloaderOperation.m in Sources */,
 				BACF987E1907C15F00A4EC95 /* MJPhoto.m in Sources */,
@@ -524,18 +643,21 @@
 				BACF98AA1907C41F00A4EC95 /* SDWebImageCompat.m in Sources */,
 				BA8CDBC719066EBB00F10616 /* AppDelegate.m in Sources */,
 				BA8CDBED1906700000F10616 /* MessageTableViewCell.m in Sources */,
+				BA0CF9481908D0700060D7F7 /* VoiceRecorderBaseVC.m in Sources */,
 				BACF98BD1907C43800A4EC95 /* MBProgressHUD+Add.m in Sources */,
 				BACF98A81907C41F00A4EC95 /* NSData+GIF.m in Sources */,
 				BACF98831907C15F00A4EC95 /* MJPhotoToolbar.m in Sources */,
 				BACF98B21907C41F00A4EC95 /* UIImage+GIF.m in Sources */,
 				BACF98B31907C41F00A4EC95 /* UIImage+MultiFormat.m in Sources */,
 				BACF98AC1907C41F00A4EC95 /* SDWebImageDownloader.m in Sources */,
+				BA0CF9471908D0700060D7F7 /* ChatVoiceRecorderVC.m in Sources */,
 				BACF98B01907C41F00A4EC95 /* SDWebImagePrefetcher.m in Sources */,
 				BACF98AB1907C41F00A4EC95 /* SDWebImageDecoder.m in Sources */,
 				BA8CDBC319066EBB00F10616 /* main.m in Sources */,
 				BACF98B61907C41F00A4EC95 /* UIImageView+WebCache.m in Sources */,
 				BACF98AF1907C41F00A4EC95 /* SDWebImageManager.m in Sources */,
 				BA8CDBE819066ED400F10616 /* chatViewController.m in Sources */,
+				BA0CF9431908D0700060D7F7 /* wav.mm in Sources */,
 				BACF98A91907C41F00A4EC95 /* SDImageCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -656,6 +778,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "mesageTableView/mesageTableView-Prefix.pch";
 				INFOPLIST_FILE = "mesageTableView/mesageTableView-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mesageTableView/VoiceConvert/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -669,6 +795,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "mesageTableView/mesageTableView-Prefix.pch";
 				INFOPLIST_FILE = "mesageTableView/mesageTableView-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/mesageTableView/VoiceConvert/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
