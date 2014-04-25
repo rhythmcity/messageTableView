@@ -77,6 +77,9 @@
 		BACF98BD1907C43800A4EC95 /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = BACF98B91907C43800A4EC95 /* MBProgressHUD+Add.m */; };
 		BACF98BE1907C43800A4EC95 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BACF98BA1907C43800A4EC95 /* MBProgressHUD.bundle */; };
 		BACF98BF1907C43800A4EC95 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BACF98BC1907C43800A4EC95 /* MBProgressHUD.m */; };
+		BAD7C4DD190A0202002972EB /* ChatData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BAD7C4DB190A0202002972EB /* ChatData.xcdatamodeld */; };
+		BAD7C4E0190A02C3002972EB /* Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD7C4DF190A02C3002972EB /* Chat.m */; };
+		BAD7C4E2190A038E002972EB /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAD7C4E1190A038E002972EB /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,6 +204,10 @@
 		BACF98BA1907C43800A4EC95 /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
 		BACF98BB1907C43800A4EC95 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		BACF98BC1907C43800A4EC95 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		BAD7C4DC190A0202002972EB /* ChatData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChatData.xcdatamodel; sourceTree = "<group>"; };
+		BAD7C4DE190A02C3002972EB /* Chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chat.h; sourceTree = "<group>"; };
+		BAD7C4DF190A02C3002972EB /* Chat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chat.m; sourceTree = "<group>"; };
+		BAD7C4E1190A038E002972EB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +215,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAD7C4E2190A038E002972EB /* CoreData.framework in Frameworks */,
 				BA0CF9281908CF630060D7F7 /* AVFoundation.framework in Frameworks */,
 				BA8CDBB919066EBB00F10616 /* CoreGraphics.framework in Frameworks */,
 				BA8CDBBB19066EBB00F10616 /* UIKit.framework in Frameworks */,
@@ -339,6 +347,7 @@
 		BA8CDBB519066EBB00F10616 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BAD7C4E1190A038E002972EB /* CoreData.framework */,
 				BA0CF9271908CF630060D7F7 /* AVFoundation.framework */,
 				BA8CDBB619066EBB00F10616 /* Foundation.framework */,
 				BA8CDBB819066EBB00F10616 /* CoreGraphics.framework */,
@@ -361,6 +370,9 @@
 				BA8CDBEC1906700000F10616 /* MessageTableViewCell.xib */,
 				BACF986D1907B0DE00A4EC95 /* Message.h */,
 				BACF986E1907B0DE00A4EC95 /* Message.m */,
+				BAD7C4DB190A0202002972EB /* ChatData.xcdatamodeld */,
+				BAD7C4DE190A02C3002972EB /* Chat.h */,
+				BAD7C4DF190A02C3002972EB /* Chat.m */,
 				BA8CDBC819066EBB00F10616 /* Images.xcassets */,
 				BA8CDBBD19066EBB00F10616 /* Supporting Files */,
 			);
@@ -633,10 +645,12 @@
 				BACF98AE1907C41F00A4EC95 /* SDWebImageManager+MJ.m in Sources */,
 				BACF986F1907B0DE00A4EC95 /* Message.m in Sources */,
 				BA0CF9461908D0700060D7F7 /* VoiceConverter.mm in Sources */,
+				BAD7C4DD190A0202002972EB /* ChatData.xcdatamodeld in Sources */,
 				BACF98821907C15F00A4EC95 /* MJPhotoProgressView.m in Sources */,
 				BACF98BF1907C43800A4EC95 /* MBProgressHUD.m in Sources */,
 				BA0CF9421908D0700060D7F7 /* amrFileCodec.mm in Sources */,
 				BACF98A71907C41F00A4EC95 /* MKAnnotationView+WebCache.m in Sources */,
+				BAD7C4E0190A02C3002972EB /* Chat.m in Sources */,
 				BACF98AD1907C41F00A4EC95 /* SDWebImageDownloaderOperation.m in Sources */,
 				BACF987E1907C15F00A4EC95 /* MJPhoto.m in Sources */,
 				BACF98B51907C41F00A4EC95 /* UIImageView+MJWebCache.m in Sources */,
@@ -783,6 +797,7 @@
 					"$(PROJECT_DIR)/mesageTableView/VoiceConvert/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = " armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -800,6 +815,7 @@
 					"$(PROJECT_DIR)/mesageTableView/VoiceConvert/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = " armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -875,6 +891,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BAD7C4DB190A0202002972EB /* ChatData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BAD7C4DC190A0202002972EB /* ChatData.xcdatamodel */,
+			);
+			currentVersion = BAD7C4DC190A0202002972EB /* ChatData.xcdatamodel */;
+			path = ChatData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = BA8CDBAB19066EBB00F10616 /* Project object */;
 }

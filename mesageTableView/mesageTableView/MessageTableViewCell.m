@@ -25,6 +25,7 @@
 -(void)setcontextText:(NSString *)context andphoto:(UIImage *)photo andVoice:(NSString *)Voice andType:(int )type andto:(int)to{
    [self.img_content removeFromSuperview];
    [self._contentBtn removeFromSuperview];
+   [self.headimg removeFromSuperview];
     switch (type ) {
         case 1:
         {
@@ -106,6 +107,7 @@
         default:
             break;
     }
+    [self addSubview:self.headimg];
 }
 #pragma mark - 播放转换后wav
 //- (void)playConvertWavBtnPressed:(id)sender {

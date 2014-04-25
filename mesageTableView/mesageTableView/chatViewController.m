@@ -10,6 +10,7 @@
 #import "MessageTableViewCell.h"
 #import "Message.h"
 #import "AppDelegate.h"
+#import "Chat.h"
 @interface chatViewController ()
 
 @end
@@ -47,7 +48,8 @@
     recorderVC = [[ChatVoiceRecorderVC alloc]init];
     recorderVC.vrbDelegate = self;
     
-  
+    [self getChatMessage];
+    [self.tableView reloadData];
     
 
 
@@ -85,6 +87,7 @@
     [contentarr addObject:n];
     // 2、刷新表格
     [self.tableView reloadData];
+     [self saveChatMessage:[contentarr lastObject]];
    [self scrolltocurrentSection];
     // 4、清空文本框内容
     __textField.text = nil;
@@ -111,9 +114,10 @@
             }
         }
     }
+    
     Message *n=[contentarr objectAtIndex:indexPath.row];
     [cell setcontextText:n.content  andphoto:n.image andVoice:n.soundData andType:n.messagetype andto:n.totype];
-
+    NSLog(@"%d",n.totype);
     return cell;
 
 
@@ -191,6 +195,7 @@
     Message *n=[Message messageWithicon:nil andtime:nil andcontent:nil andimage:photo andsoundData:nil andtoType:MessageTypeMe andmessgeType:pic];
     [contentarr addObject:n];
     [self.tableView reloadData];
+     [self saveChatMessage:[contentarr lastObject]];
     [self scrolltocurrentSection];
 }
 
@@ -199,8 +204,9 @@
     if (contentarr.count!=0) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:contentarr.count - 1 inSection:0];
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        
     }
-   
+ 
 
 }
 #pragma mark - 语音按钮点击
@@ -253,6 +259,44 @@
     [self scrolltocurrentSection];
 }
 
+- (NSManagedObjectContext *)managedObjectContext {
+    NSManagedObjectContext *context = nil;
+    id delegate = [[UIApplication sharedApplication] delegate];
+    if ([delegate performSelector:@selector(managedObjectContext)]) {
+        context = [delegate managedObjectContext];
+    }
+    return context;
+}
+-(void)saveChatMessage:(Message *)message{
+    NSManagedObjectContext *contenxt=[self managedObjectContext];
+    Chat *chat=[NSEntityDescription insertNewObjectForEntityForName:@"Chat" inManagedObjectContext:contenxt];
+    chat.contentTent=message.content;
+    chat.imageData=UIImageJPEGRepresentation(message.image , 0.75f) ;;
+    chat.time=nil;
+    chat.toType=[NSNumber numberWithInt:message.totype];
+    chat.messageType=[NSNumber numberWithInt:message.messagetype];
+    chat.soundData=message.soundData;
+    chat.iconimage=nil;
+    NSError *error=nil;
+    [contenxt save:&error];
+}
+
+-(NSMutableArray *)getChatMessage{
+    NSManagedObjectContext *contenxt=[self managedObjectContext];
+    NSFetchRequest *fectrequest=[[NSFetchRequest alloc] initWithEntityName:@"Chat"];
+    NSMutableArray *array=[[NSMutableArray alloc] initWithArray:[contenxt executeFetchRequest:fectrequest error:nil]];
+    
+
+    for (int i =0; i<[array count]; i++) {
+        
+        Chat *chat=[array objectAtIndex:[array count]-i-1];
+        Message *n=[Message messageWithicon:nil andtime:chat.time andcontent:chat.contentTent andimage:[UIImage imageWithData:chat.imageData] andsoundData:chat.soundData andtoType:[chat.toType intValue] andmessgeType:[chat.messageType intValue]];
+        [contentarr insertObject:n atIndex:0];
+    }
+
+    return contentarr;
+
+}
 - (void)amrToWavBtnPressed{
     if (convertAmr.length > 0){
         self.convertWav = [originWav stringByAppendingString:@"amrToWav"];
@@ -260,6 +304,7 @@
      //   NSLog(@"%@",recorderVC.recordFilePath);
         Message *n=[Message messageWithicon:nil andtime:nil andcontent:nil andimage:nil andsoundData:recorderVC.recordFilePath andtoType:MessageTypeMe andmessgeType:sound];
         [contentarr addObject:n];
+         [self saveChatMessage:[contentarr lastObject]];
         [self performSelectorOnMainThread:@selector(reloadmessage) withObject:nil waitUntilDone:YES];
        
 
