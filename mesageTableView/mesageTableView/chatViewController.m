@@ -41,16 +41,22 @@
     __textField.leftViewMode = UITextFieldViewModeAlways;
     
     __textField.delegate = self;
+    
  
-    tableViewHeight=[[UIScreen mainScreen] currentMode].size.height/2-self.toolView.frame.size.height;
- //   NSLog(@"%f",tableViewHeight);
+   // tableViewHeight=[[UIScreen mainScreen] currentMode].size.height/2-self.toolView.frame.size.height;
+    if (iPhone5) {
+        tableViewHeight=568-self.toolView.frame.size.height;
+    }else{
+        tableViewHeight=480-self.toolView.frame.size.height;
+    }
+    NSLog(@"%f",tableViewHeight);
     
     recorderVC = [[ChatVoiceRecorderVC alloc]init];
     recorderVC.vrbDelegate = self;
-    
+   // [self shareplayer];
     [self getChatMessage];
     [self.tableView reloadData];
-    
+    [self scrolltocurrentSection];
 
 
 }
@@ -83,12 +89,12 @@
     NSDate *date = [NSDate date];
     fmt.dateFormat = @"MM-dd"; // @"yyyy-MM-dd HH:mm:ss"
     NSString *time = [fmt stringFromDate:date];
-    Message *n=[Message messageWithicon:nil andtime:time andcontent:textField.text andimage:nil andsoundData:nil andtoType:MessageTypeMe andmessgeType:text];
+    Message *n=[Message messageWithicon:nil andtime:time andcontent:textField.text andimage:nil andsoundData:nil andtoType:MessageTypeMe andmessgeType:text andWAVsoundDataS:nil andAMRSoundDataS:nil];
     [contentarr addObject:n];
     // 2、刷新表格
     [self.tableView reloadData];
-     [self saveChatMessage:[contentarr lastObject]];
-   [self scrolltocurrentSection];
+    [self saveChatMessage:[contentarr lastObject]];
+    [self scrolltocurrentSection];
     // 4、清空文本框内容
     __textField.text = nil;
     return YES;
@@ -114,11 +120,56 @@
             }
         }
     }
-    
+    cell.playdelegate=self;
+   // self.player.delegate=cell;
     Message *n=[contentarr objectAtIndex:indexPath.row];
-    [cell setcontextText:n.content  andphoto:n.image andVoice:n.soundData andType:n.messagetype andto:n.totype];
-    NSLog(@"%d",n.totype);
+    [cell setcontextText:n.content andphoto:n.image andVoice:n.soundData andVoiceData:n.WAVsoundDataS andType:n.messagetype andto:n.totype ];
+  //  NSLog(@"%d",n.totype);
     return cell;
+
+
+}
+static AVAudioPlayer *play;
+-(id)shareplayer{
+    @synchronized(play)
+    {
+        if(nil == play)
+        {
+            play=[[AVAudioPlayer alloc] init];
+            
+        }
+    }
+    
+    return play;
+}
+
+-(void)playVoice:(NSData *)voiddata {
+    if (self.player.isPlaying) {
+        if ([self.player.data isEqualToData:voiddata]) {
+            [self.player stop];
+        }else{
+            [self.player stop];
+            self.player=[self shareplayer];
+            self.player=[self.player initWithData:voiddata error:nil];
+            [self.player play];
+
+            
+        }
+        return;
+        
+    }
+    self.player=[self shareplayer];
+    self.player=[self.player initWithData:voiddata error:nil];
+    [self.player play];
+
+    
+   
+//    if (!isplaying) {
+//        [self.player stop];
+//        return;
+//    }
+
+
 
 
 }
@@ -192,7 +243,7 @@
 
    [picker dismissViewControllerAnimated:YES completion:Nil];
     UIImage * photo = [info objectForKey:UIImagePickerControllerEditedImage];
-    Message *n=[Message messageWithicon:nil andtime:nil andcontent:nil andimage:photo andsoundData:nil andtoType:MessageTypeMe andmessgeType:pic];
+    Message *n=[Message messageWithicon:nil andtime:nil andcontent:nil andimage:photo andsoundData:nil andtoType:MessageTypeMe andmessgeType:pic andWAVsoundDataS:nil andAMRSoundDataS:nil];
     [contentarr addObject:n];
     [self.tableView reloadData];
      [self saveChatMessage:[contentarr lastObject]];
@@ -257,6 +308,9 @@
 -(void)reloadmessage{
     [self.tableView reloadData];
     [self scrolltocurrentSection];
+    NSFileManager *filemanger=[NSFileManager defaultManager];
+    [filemanger removeItemAtPath:recorderVC.recordFilePath error:nil];
+    [filemanger removeItemAtPath:[VoiceRecorderBaseVC getPathByFileName:convertAmr ofType:@"amr"] error:nil];
 }
 
 - (NSManagedObjectContext *)managedObjectContext {
@@ -276,6 +330,7 @@
     chat.toType=[NSNumber numberWithInt:message.totype];
     chat.messageType=[NSNumber numberWithInt:message.messagetype];
     chat.soundData=message.soundData;
+    chat.soundDataS=message.WAVsoundDataS;
     chat.iconimage=nil;
     NSError *error=nil;
     [contenxt save:&error];
@@ -285,12 +340,11 @@
     NSManagedObjectContext *contenxt=[self managedObjectContext];
     NSFetchRequest *fectrequest=[[NSFetchRequest alloc] initWithEntityName:@"Chat"];
     NSMutableArray *array=[[NSMutableArray alloc] initWithArray:[contenxt executeFetchRequest:fectrequest error:nil]];
-    
 
     for (int i =0; i<[array count]; i++) {
         
         Chat *chat=[array objectAtIndex:[array count]-i-1];
-        Message *n=[Message messageWithicon:nil andtime:chat.time andcontent:chat.contentTent andimage:[UIImage imageWithData:chat.imageData] andsoundData:chat.soundData andtoType:[chat.toType intValue] andmessgeType:[chat.messageType intValue]];
+        Message *n=[Message messageWithicon:nil andtime:chat.time andcontent:chat.contentTent andimage:[UIImage imageWithData:chat.imageData] andsoundData:chat.soundData andtoType:[chat.toType intValue] andmessgeType:[chat.messageType intValue] andWAVsoundDataS:chat.soundDataS andAMRSoundDataS:nil];
         [contentarr insertObject:n atIndex:0];
     }
 
@@ -301,16 +355,21 @@
     if (convertAmr.length > 0){
         self.convertWav = [originWav stringByAppendingString:@"amrToWav"];
        // NSLog(@"%@",convertWav);
-     //   NSLog(@"%@",recorderVC.recordFilePath);
-        Message *n=[Message messageWithicon:nil andtime:nil andcontent:nil andimage:nil andsoundData:recorderVC.recordFilePath andtoType:MessageTypeMe andmessgeType:sound];
+        NSLog(@"%@",recorderVC.recordFilePath);
+        Message *n=[Message messageWithicon:nil andtime:nil andcontent:nil andimage:nil andsoundData:recorderVC.recordFilePath andtoType:MessageTypeMe andmessgeType:sound andWAVsoundDataS:[NSData dataWithContentsOfFile:recorderVC.recordFilePath]  andAMRSoundDataS:[NSData dataWithContentsOfFile:[VoiceRecorderBaseVC getPathByFileName:convertAmr ofType:@"amr"]]];
         [contentarr addObject:n];
          [self saveChatMessage:[contentarr lastObject]];
         [self performSelectorOnMainThread:@selector(reloadmessage) withObject:nil waitUntilDone:YES];
-       
+        
+        
 
 //        //转格式
 //        [VoiceConverter amrToWav:[VoiceRecorderBaseVC getPathByFileName:convertAmr ofType:@"amr"] wavSavePath:[VoiceRecorderBaseVC getPathByFileName:convertWav ofType:@"wav"]];
 //        
     }
+}
+-(void)writeAmr:(NSData *)armdata{
+ //  [NSFileManager defaultManager]  createFileAtPath:<#(NSString *)#> contents:<#(NSData *)#> attributes:<#(NSDictionary *)#>
+  //  [armdata writeToFile:[] atomically:YES];
 }
 @end

@@ -10,7 +10,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import "ChatVoiceRecorderVC.h"
 #import "VoiceConverter.h"
-@interface chatViewController : UIViewController<UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,VoiceRecorderBaseVCDelegate>
+#import "MessageTableViewCell.h"
+@interface chatViewController : UIViewController<UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,VoiceRecorderBaseVCDelegate,platVoice>
 {
 
     NSMutableArray *contentarr;

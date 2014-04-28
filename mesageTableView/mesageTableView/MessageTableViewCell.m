@@ -22,7 +22,7 @@
 
     // Configure the view for the selected state
 }
--(void)setcontextText:(NSString *)context andphoto:(UIImage *)photo andVoice:(NSString *)Voice andType:(int )type andto:(int)to{
+-(void)setcontextText:(NSString *)context andphoto:(UIImage *)photo andVoice:(NSString *)Voice andVoiceData:(NSData *)voicedata andType:(int )type andto:(int)to{
    [self.img_content removeFromSuperview];
    [self._contentBtn removeFromSuperview];
    [self.headimg removeFromSuperview];
@@ -97,6 +97,7 @@
                 
             }
             convertWav=Voice;
+            Voicedata=voicedata;
             [self._contentBtn setTitle:@"这是一条语音" forState:UIControlStateNormal];
             [self._contentBtn setBackgroundImage:normal forState:UIControlStateNormal];
             [self._contentBtn addTarget:self action:@selector(playVoice:) forControlEvents:UIControlEventTouchUpInside];
@@ -113,15 +114,21 @@
 //- (void)playConvertWavBtnPressed:(id)sender {
 //  
 //}
+
 -(void)playVoice:(id)sender{
 
     if (convertWav.length > 0){
-        //初始化播放器
-        _player = [[AVAudioPlayer alloc]init];
-        _player = [_player initWithContentsOfURL:[NSURL URLWithString:convertWav] error:nil];
+//        if (cellIsplaying) {
+//            cellIsplaying=NO;
+//            
+//        }else{
+//            cellIsplaying=YES;
+//        }
+        [self.playdelegate playVoice:Voicedata ];
+        }
     
-        [_player play];
-    }
+       
+    
 
 }
 -(void)showbigPhoto:(UITapGestureRecognizer *)tap{
@@ -151,6 +158,7 @@
 
 
 }
+
 - (void)dealloc
 {
    // self.img_content=nil;

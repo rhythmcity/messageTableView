@@ -78,8 +78,8 @@
 		BACF98BE1907C43800A4EC95 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BACF98BA1907C43800A4EC95 /* MBProgressHUD.bundle */; };
 		BACF98BF1907C43800A4EC95 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BACF98BC1907C43800A4EC95 /* MBProgressHUD.m */; };
 		BAD7C4DD190A0202002972EB /* ChatData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BAD7C4DB190A0202002972EB /* ChatData.xcdatamodeld */; };
-		BAD7C4E0190A02C3002972EB /* Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD7C4DF190A02C3002972EB /* Chat.m */; };
 		BAD7C4E2190A038E002972EB /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAD7C4E1190A038E002972EB /* CoreData.framework */; };
+		BAE706A4190DF7D800DDDB70 /* Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE706A3190DF7D800DDDB70 /* Chat.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -205,9 +205,10 @@
 		BACF98BB1907C43800A4EC95 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		BACF98BC1907C43800A4EC95 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		BAD7C4DC190A0202002972EB /* ChatData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChatData.xcdatamodel; sourceTree = "<group>"; };
-		BAD7C4DE190A02C3002972EB /* Chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chat.h; sourceTree = "<group>"; };
-		BAD7C4DF190A02C3002972EB /* Chat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chat.m; sourceTree = "<group>"; };
 		BAD7C4E1190A038E002972EB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		BAD7C4E3190A619D002972EB /* ChatData 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ChatData 2.xcdatamodel"; sourceTree = "<group>"; };
+		BAE706A2190DF7D800DDDB70 /* Chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chat.h; sourceTree = "<group>"; };
+		BAE706A3190DF7D800DDDB70 /* Chat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chat.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,9 +371,9 @@
 				BA8CDBEC1906700000F10616 /* MessageTableViewCell.xib */,
 				BACF986D1907B0DE00A4EC95 /* Message.h */,
 				BACF986E1907B0DE00A4EC95 /* Message.m */,
+				BAE706A2190DF7D800DDDB70 /* Chat.h */,
+				BAE706A3190DF7D800DDDB70 /* Chat.m */,
 				BAD7C4DB190A0202002972EB /* ChatData.xcdatamodeld */,
-				BAD7C4DE190A02C3002972EB /* Chat.h */,
-				BAD7C4DF190A02C3002972EB /* Chat.m */,
 				BA8CDBC819066EBB00F10616 /* Images.xcassets */,
 				BA8CDBBD19066EBB00F10616 /* Supporting Files */,
 			);
@@ -566,6 +567,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "李言";
 				TargetAttributes = {
+					BA8CDBB219066EBB00F10616 = {
+						DevelopmentTeam = 6E2M3FNC5V;
+					};
 					BA8CDBCD19066EBC00F10616 = {
 						TestTargetID = BA8CDBB219066EBB00F10616;
 					};
@@ -650,7 +654,7 @@
 				BACF98BF1907C43800A4EC95 /* MBProgressHUD.m in Sources */,
 				BA0CF9421908D0700060D7F7 /* amrFileCodec.mm in Sources */,
 				BACF98A71907C41F00A4EC95 /* MKAnnotationView+WebCache.m in Sources */,
-				BAD7C4E0190A02C3002972EB /* Chat.m in Sources */,
+				BAE706A4190DF7D800DDDB70 /* Chat.m in Sources */,
 				BACF98AD1907C41F00A4EC95 /* SDWebImageDownloaderOperation.m in Sources */,
 				BACF987E1907C15F00A4EC95 /* MJPhoto.m in Sources */,
 				BACF98B51907C41F00A4EC95 /* UIImageView+MJWebCache.m in Sources */,
@@ -789,6 +793,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "mesageTableView/mesageTableView-Prefix.pch";
 				INFOPLIST_FILE = "mesageTableView/mesageTableView-Info.plist";
@@ -796,8 +802,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/mesageTableView/VoiceConvert/lib",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = " armv7 armv7s";
+				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -807,6 +815,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "mesageTableView/mesageTableView-Prefix.pch";
 				INFOPLIST_FILE = "mesageTableView/mesageTableView-Info.plist";
@@ -815,7 +825,8 @@
 					"$(PROJECT_DIR)/mesageTableView/VoiceConvert/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = " armv7 armv7s";
+				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -896,9 +907,10 @@
 		BAD7C4DB190A0202002972EB /* ChatData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				BAD7C4E3190A619D002972EB /* ChatData 2.xcdatamodel */,
 				BAD7C4DC190A0202002972EB /* ChatData.xcdatamodel */,
 			);
-			currentVersion = BAD7C4DC190A0202002972EB /* ChatData.xcdatamodel */;
+			currentVersion = BAD7C4E3190A619D002972EB /* ChatData 2.xcdatamodel */;
 			path = ChatData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
