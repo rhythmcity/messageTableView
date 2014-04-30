@@ -11,7 +11,9 @@
 #import "ChatVoiceRecorderVC.h"
 #import "VoiceConverter.h"
 #import "MessageTableViewCell.h"
-@interface chatViewController : UIViewController<UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,VoiceRecorderBaseVCDelegate,platVoice>
+#import "XMPPFramework.h"
+#import "AppDelegate.h"
+@interface chatViewController : UIViewController<UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,VoiceRecorderBaseVCDelegate,platVoice,ChatDelegate>
 {
 
     NSMutableArray *contentarr;
@@ -37,15 +39,16 @@
 @property (strong, nonatomic)     NSString                *convertAmr;        //转换后的amr文件名
 @property (strong, nonatomic)     NSString                *convertWav;        //amr转wav的文件名
 @property (strong, nonatomic)   AVAudioPlayer           *player;
+@property (nonatomic, strong) NSString *toJIDString;
+@property (nonatomic, strong) XMPPJID *toJID;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UITextField *_textField;
-
 @property (strong, nonatomic) IBOutlet UIView *toolView;
-
+@property (nonatomic,strong) XMPPUserCoreDataStorageObject *xmppUserObject;
+@property (strong, nonatomic) IBOutlet UIButton *_speakBtn;
 - (IBAction)addphoto_click:(id)sender;
 - (IBAction)voiceBtnClick:(id)sender;
-@property (strong, nonatomic) IBOutlet UIButton *_speakBtn;
 - (IBAction)recordVoice:(id)sender;
 - (IBAction)upStopRecordVoice:(id)sender;
 

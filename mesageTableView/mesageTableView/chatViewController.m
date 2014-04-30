@@ -53,6 +53,10 @@
     
     recorderVC = [[ChatVoiceRecorderVC alloc]init];
     recorderVC.vrbDelegate = self;
+    self.title = self.xmppUserObject.displayName;
+    self.toJIDString = self.xmppUserObject.jidStr;
+    self.toJID = self.xmppUserObject.jid;
+  //  [self getMessageData];
    // [self shareplayer];
     [self getChatMessage];
     [self.tableView reloadData];
@@ -91,6 +95,7 @@
     NSString *time = [fmt stringFromDate:date];
     Message *n=[Message messageWithicon:nil andtime:time andcontent:textField.text andimage:nil andsoundData:nil andtoType:MessageTypeMe andmessgeType:text andWAVsoundDataS:nil andAMRSoundDataS:nil];
     [contentarr addObject:n];
+    [self sendMessage:n];
     // 2、刷新表格
     [self.tableView reloadData];
     [self saveChatMessage:[contentarr lastObject]];
@@ -99,7 +104,45 @@
     __textField.text = nil;
     return YES;
 }
+- (AppDelegate *)appDelegate
+{
+    AppDelegate *delegate =  (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    delegate.chatDelegate = self;
+	return delegate;
+}
+-(void)sendMessage:(Message*)messages{
+    XMPPMessage *message =[XMPPMessage messageWithType:@"chat" to:self.toJID];
+    NSMutableDictionary *contentdic=[[NSMutableDictionary alloc] init];
+    [contentdic setObject:messages.content forKey:@"messageBody"];
+    [contentdic setObject:[NSString stringWithFormat:@"%d",messages.messagetype] forKey:@"messageType"];
+    [message addBody:[NSString stringWithFormat:@"%@",contentdic]];
+    NSLog(@"%@",message);
+  
+    [[[self appDelegate] xmppStream]sendElement:message];
 
+
+}
+
+-(void)sendAudio:(Message *)messages{
+    XMPPMessage *message=[XMPPMessage messageWithType:@"chat" to:self.toJID];
+    NSMutableDictionary *contentdic=[[NSMutableDictionary alloc] init];
+    [contentdic setObject:messages.AMRSoundDataS forKey:@"messageBody"];
+    [contentdic setObject:[NSString stringWithFormat:@"%d",messages.messagetype] forKey:@"messageType"];
+    [message addBody:[NSString stringWithFormat:@"%@",contentdic]];
+     NSLog(@"%@",message);
+    [[[self appDelegate] xmppStream]sendElement:message];
+
+}
+-(void)sendPhoto:(Message *)messages{
+    XMPPMessage *message=[XMPPMessage messageWithType:@"chat" to:self.toJID];
+    NSLog(@"%d",messages.messagetype);
+    NSMutableDictionary *contentdic=[[NSMutableDictionary alloc] init];
+    [contentdic setObject:UIImageJPEGRepresentation(messages.image , 0.75f)forKey:@"messageBody"];
+    [contentdic setObject:[NSString stringWithFormat:@"%d",messages.messagetype] forKey:@"messageType"];
+    [message addBody:[NSString stringWithFormat:@"%@",contentdic]];
+     NSLog(@"%@",message);
+    [[[self appDelegate] xmppStream]sendElement:message];
+}
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -152,27 +195,14 @@ static AVAudioPlayer *play;
             self.player=[self shareplayer];
             self.player=[self.player initWithData:voiddata error:nil];
             [self.player play];
-
-            
         }
         return;
-        
     }
     self.player=[self shareplayer];
     self.player=[self.player initWithData:voiddata error:nil];
     [self.player play];
-
-    
-   
-//    if (!isplaying) {
-//        [self.player stop];
-//        return;
-//    }
-
-
-
-
 }
+
 #pragma mark 键盘即将显示
 - (void)keyBoardWillShow:(NSNotification *)note{
     CGRect rect = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -184,9 +214,11 @@ static AVAudioPlayer *play;
     }];
     
 }
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     [self.view endEditing:YES];
 }
+
 #pragma mark 键盘即将退出
 - (void)keyBoardWillHide:(NSNotification *)note{
     [UIView animateWithDuration:[note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue] animations:^{
@@ -194,8 +226,6 @@ static AVAudioPlayer *play;
         self.toolView.frame=CGRectMake(0, tableViewHeight, self.toolView.frame.size.width, self.toolView.frame.size.height);
     }];
 }
-
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -209,8 +239,6 @@ static AVAudioPlayer *play;
     [sheet showInView:[UIApplication sharedApplication].keyWindow];
 
 }
-
-
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -237,7 +265,6 @@ static AVAudioPlayer *play;
     }
 }
 
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
 
@@ -245,6 +272,7 @@ static AVAudioPlayer *play;
     UIImage * photo = [info objectForKey:UIImagePickerControllerEditedImage];
     Message *n=[Message messageWithicon:nil andtime:nil andcontent:nil andimage:photo andsoundData:nil andtoType:MessageTypeMe andmessgeType:pic andWAVsoundDataS:nil andAMRSoundDataS:nil];
     [contentarr addObject:n];
+    [self sendPhoto:n];
     [self.tableView reloadData];
      [self saveChatMessage:[contentarr lastObject]];
     [self scrolltocurrentSection];
@@ -255,11 +283,9 @@ static AVAudioPlayer *play;
     if (contentarr.count!=0) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:contentarr.count - 1 inSection:0];
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        
     }
- 
-
 }
+
 #pragma mark - 语音按钮点击
 - (IBAction)voiceBtnClick:(id)sender {
     if (__textField.hidden) { //输入框隐藏，按住说话按钮显示
@@ -276,6 +302,7 @@ static AVAudioPlayer *play;
         [__textField resignFirstResponder];
     }
 }
+
 - (IBAction)recordVoice:(id)sender {
     //设置文件名
     self.originWav = [VoiceRecorderBaseVC getCurrentTimeString];
@@ -292,10 +319,12 @@ static AVAudioPlayer *play;
     [VoiceConverter changeStu];
     [recorderVC endRecord];
 }
+
 - (void)VoiceRecorderBaseVCRecordFinish:(NSString *)_filePath fileName:(NSString*)_fileName{
     NSLog(@"录音完成，文件路径:%@",_filePath);
     [self wavToAmrBtnPressed];
 }
+
 - (void)wavToAmrBtnPressed{
     if (originWav.length > 0){
         self.convertAmr = [originWav stringByAppendingString:@"wavToAmr"];
@@ -305,6 +334,7 @@ static AVAudioPlayer *play;
         [self amrToWavBtnPressed];
     }
 }
+
 -(void)reloadmessage{
     [self.tableView reloadData];
     [self scrolltocurrentSection];
@@ -321,11 +351,12 @@ static AVAudioPlayer *play;
     }
     return context;
 }
+
 -(void)saveChatMessage:(Message *)message{
     NSManagedObjectContext *contenxt=[self managedObjectContext];
     Chat *chat=[NSEntityDescription insertNewObjectForEntityForName:@"Chat" inManagedObjectContext:contenxt];
     chat.contentTent=message.content;
-    chat.imageData=UIImageJPEGRepresentation(message.image , 0.75f) ;;
+    chat.imageData=UIImageJPEGRepresentation(message.image , 0.75f) ;
     chat.time=nil;
     chat.toType=[NSNumber numberWithInt:message.totype];
     chat.messageType=[NSNumber numberWithInt:message.messagetype];
@@ -351,6 +382,7 @@ static AVAudioPlayer *play;
     return contentarr;
 
 }
+
 - (void)amrToWavBtnPressed{
     if (convertAmr.length > 0){
         self.convertWav = [originWav stringByAppendingString:@"amrToWav"];
@@ -358,7 +390,8 @@ static AVAudioPlayer *play;
         NSLog(@"%@",recorderVC.recordFilePath);
         Message *n=[Message messageWithicon:nil andtime:nil andcontent:nil andimage:nil andsoundData:recorderVC.recordFilePath andtoType:MessageTypeMe andmessgeType:sound andWAVsoundDataS:[NSData dataWithContentsOfFile:recorderVC.recordFilePath]  andAMRSoundDataS:[NSData dataWithContentsOfFile:[VoiceRecorderBaseVC getPathByFileName:convertAmr ofType:@"amr"]]];
         [contentarr addObject:n];
-         [self saveChatMessage:[contentarr lastObject]];
+        [self sendAudio:n];
+        [self saveChatMessage:[contentarr lastObject]];
         [self performSelectorOnMainThread:@selector(reloadmessage) withObject:nil waitUntilDone:YES];
         
         
@@ -368,8 +401,16 @@ static AVAudioPlayer *play;
 //        
     }
 }
+
 -(void)writeAmr:(NSData *)armdata{
  //  [NSFileManager defaultManager]  createFileAtPath:<#(NSString *)#> contents:<#(NSData *)#> attributes:<#(NSDictionary *)#>
   //  [armdata writeToFile:[] atomically:YES];
+}
+
+-(void)getNewMessage:(AppDelegate *)appD Message:(XMPPMessage *)message
+{
+   // [self getMessageData];
+
+    [self.tableView reloadData];
 }
 @end
